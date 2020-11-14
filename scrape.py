@@ -80,6 +80,8 @@ def scrape(Group):
                     elem.clear()
                     elem.send_keys(Group.pw)
                     driver.find_element_by_xpath("//input[@value='confirm']").click()
+                    time.sleep(1)
+                    print("Successfully changed to 2")
                 except:
                     print("Failed to switch to 2")
 
@@ -98,6 +100,8 @@ def scrape(Group):
                     elem.clear()
                     elem.send_keys(Group.pw)
                     driver.find_element_by_xpath("//input[@value='confirm']").click()
+                    time.sleep(1)
+                    print("Successfully changed back to 3")
                 except:
                     print("********")
                     print("******** FAILED TO SWITCH BACK TO 3!!!!")
