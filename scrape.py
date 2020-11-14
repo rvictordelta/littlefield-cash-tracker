@@ -40,13 +40,15 @@ def scrape(Group):
         td = datetime.now() - datetime(2020, 11, 9, 12)
         hours_elapsed = td.days * 24.0 + td.seconds / 3600.0
         gday_elapsed = round(hours_elapsed * 1.25 + 50, 2)
+
+        # set up the data: the in-game displayed date, the calculated elapsed time, and the $ balance
         out = [disp_gday, gday_elapsed, balance]
 
         # debug
         # print(disp_gday, balance, gday_elapsed)
 
         file_name = 'cash_data.csv'
-        # read last
+        # read last from db
         with open(file_name, 'r', newline='') as read_obj:
             i = -1
             last = []
@@ -55,15 +57,14 @@ def scrape(Group):
                 i = i - 1
             print(last, 'vs', out)
 
-        # write latest
-        # checks that this is a new time
-        if len(out) > 0 and float(out[1]) > float(last[1]):
+        # write latest to db
+        if len(out) > 0 and float(out[1]) > float(last[1]):  # checks that this is a new time
             with open(file_name, 'a+') as fp:
                 wr = csv.writer(fp, lineterminator='\n')
                 wr.writerow(out)
 
             # checks that this is a sufficient change
-            chg_bool = int(out[2]) > int(last[2])  # handles no change and inv purchase
+            chg_bool = int(out[2]) > int(last[2])  # handles no change and INV purchase
             chg_value = int(out[2]) - int(last[2])
             if chg_value < 500 and chg_bool and int(out[0]) == int(last[0]):
                 # change it to 2
@@ -103,8 +104,6 @@ def scrape(Group):
                     print("********")
             # print(last)
         time.sleep(5)
-
-
 
 
 class Group:
